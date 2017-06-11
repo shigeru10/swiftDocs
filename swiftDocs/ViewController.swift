@@ -10,37 +10,56 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var myInfoDarkButton: UIButton!
+    private var myInfoLightButton: UIButton!
+    private var myAddButton: UIButton!
+    private var myDetailButton: UIButton!
+    private var mySystemButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let myButton = UIButton()
+        myInfoDarkButton = UIButton(type: .infoDark)
+        myInfoLightButton = UIButton(type: .infoLight)
+        myAddButton = UIButton(type: .contactAdd)
+        myDetailButton = UIButton(type: .detailDisclosure)
+        mySystemButton = UIButton(type: .system)
         
-        let bWidth: CGFloat = 200
-        let bHeihgt: CGFloat = 50
+        let posX: CGFloat = self.view.frame.width/2
+        myInfoDarkButton.layer.position = CGPoint(x: posX, y: 50)
+        myInfoLightButton.layer.position = CGPoint(x: posX, y: 100)
+        myAddButton.layer.position = CGPoint(x: posX, y: 150)
+        myDetailButton.layer.position = CGPoint(x: posX, y: 200)
         
-        let posX: CGFloat = self.view.bounds.width/2 - bWidth/2
-        let posY: CGFloat = self.view.bounds.height/2 - bHeihgt/2
+        let sWidth: CGFloat = 200
+        let sHeight: CGFloat = 50
         
-        myButton.frame = CGRect(x: posX, y: posY, width: bWidth, height: bHeihgt)
+        let sposX: CGFloat = self.view.frame.width/2 - sWidth/2
+        let sposY: CGFloat = 250
         
-        myButton.backgroundColor = UIColor.red
+        mySystemButton.frame = CGRect(x: sposX, y: sposY, width: sWidth, height: sHeight)
         
-        myButton.layer.masksToBounds = true
+        mySystemButton.setTitle("MySystemButton", for: .normal)
         
-        myButton.layer.cornerRadius = 20.0
+        myInfoDarkButton.tag = 1
+        myInfoLightButton.tag = 2
+        myAddButton.tag = 3
+        myDetailButton.tag = 4
+        mySystemButton.tag = 5
         
-        myButton.setTitle("ボタン(通常)", for: .normal)
-        myButton.setTitleColor(UIColor.white, for: .normal)
-
-        myButton.setTitle("ボタン(押された時)", for: .highlighted)
-        myButton.setTitleColor(UIColor.black, for: .highlighted)
+        myInfoDarkButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
+        myInfoLightButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
+        myAddButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
+        myDetailButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
+        mySystemButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
         
-        myButton.tag = 1
+        self.view.addSubview(myInfoDarkButton)
+        self.view.addSubview(myInfoLightButton)
+        self.view.addSubview(myAddButton)
+        self.view.addSubview(myDetailButton)
+        self.view.addSubview(mySystemButton)
         
-        myButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchUpInside)
-        
-        self.view.addSubview(myButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,8 +69,9 @@ class ViewController: UIViewController {
 
     internal func onClickMyButton(sender: UIButton) {
         print("onClickMyButton:")
-        print("sender.currentTitle" + String(describing: sender.currentTitle))
+        print("sender.currentTitle: \(sender.currentTitle)")
         print("sender.tag: \(sender.tag)")
     }
+    
 }
 
