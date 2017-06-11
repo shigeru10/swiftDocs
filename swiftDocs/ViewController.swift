@@ -14,29 +14,33 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let myButton = UIButton()
+        
         let bWidth: CGFloat = 200
         let bHeihgt: CGFloat = 50
         
         let posX: CGFloat = self.view.bounds.width/2 - bWidth/2
         let posY: CGFloat = self.view.bounds.height/2 - bHeihgt/2
         
-        let label: UILabel = UILabel(frame: CGRect(x: posX, y: posY, width: bWidth, height: bHeihgt))
+        myButton.frame = CGRect(x: posX, y: posY, width: bWidth, height: bHeihgt)
         
-        label.backgroundColor = UIColor.orange
+        myButton.backgroundColor = UIColor.red
         
-        label.layer.masksToBounds = true
+        myButton.layer.masksToBounds = true
         
-        label.layer.cornerRadius = 20.0
+        myButton.layer.cornerRadius = 20.0
         
-        label.text = "Hello Swift!!"
+        myButton.setTitle("ボタン(通常)", for: .normal)
+        myButton.setTitleColor(UIColor.white, for: .normal)
 
-        label.shadowColor = UIColor.gray
+        myButton.setTitle("ボタン(押された時)", for: .highlighted)
+        myButton.setTitleColor(UIColor.black, for: .highlighted)
         
-        label.textAlignment = NSTextAlignment.center
+        myButton.tag = 1
         
-        self.view.backgroundColor = UIColor.cyan
+        myButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchUpInside)
         
-        self.view.addSubview(label)
+        self.view.addSubview(myButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +48,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    internal func onClickMyButton(sender: UIButton) {
+        print("onClickMyButton:")
+        print("sender.currentTitle" + String(describing: sender.currentTitle))
+        print("sender.tag: \(sender.tag)")
+    }
 }
 
