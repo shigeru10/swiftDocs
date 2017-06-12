@@ -10,28 +10,24 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
-    private var myTextField: UITextField!
+    private var myImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let tWidth: CGFloat = 200
-        let tHeight: CGFloat = 30
-        let posX: CGFloat = (self.view.bounds.width - tWidth)/2
-        let posY: CGFloat = (self.view.bounds.height - tHeight)/2
+        let iWidth: CGFloat = 300
+        let iHeight: CGFloat = 100
+        let posX: CGFloat = (self.view.bounds.width - iWidth)/2
+        let posY: CGFloat = (self.view.bounds.height - iHeight)/2
         
-        myTextField = UITextField(frame: CGRect(x: posX, y: posY, width: tWidth, height: tHeight))
+        myImageView = UIImageView(frame: CGRect(x: posX, y: posY, width: iWidth, height: iHeight))
         
-        myTextField.text = "Hello textField!"
+        let myImage = UIImage(named: "ramen.jpg")!
         
-        myTextField.delegate = self
+        myImageView.image = myImage
         
-        myTextField.borderStyle = .roundedRect
-        
-        myTextField.clearButtonMode = .whileEditing
-        
-        self.view.addSubview(myTextField)
+        self.view.addSubview(myImageView)
         
     }
 
