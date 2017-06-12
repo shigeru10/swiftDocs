@@ -8,27 +8,28 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    private var myImageView: UIImageView!
+    private let myItems: NSArray = ["TEST1", "TEST2", "TEST3"]
+    private var myTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let iWidth: CGFloat = 300
-        let iHeight: CGFloat = 100
-        let posX: CGFloat = (self.view.bounds.width - iWidth)/2
-        let posY: CGFloat = (self.view.bounds.height - iHeight)/2
+        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         
-        myImageView = UIImageView(frame: CGRect(x: posX, y: posY, width: iWidth, height: iHeight))
+        let displayWidth: CGFloat = self.view.frame.width
+        let displayHeight: CGFloat = self.view.frame.height
         
-        let myImage = UIImage(named: "ramen.jpg")!
+        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight))
         
-        myImageView.image = myImage
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
         
-        self.view.addSubview(myImageView)
+        myTableView.delegate = self
+        myTableView.dataSource = self
         
+        self.view.addSubview(myTableView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,20 +37,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("textFieldDidBeginEditing: \(textField.text!)")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        print("Value: \(myItems[indexPath.row])")
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("textFieldDidEndEditing: \(textField.text!)")
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return myItems.count
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn: \(textField.text!)")
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath as IndexPath)
         
-        textField.resignFirstResponder()
+        cell.textLabel?.text = "\(myItems[indexPath.row])"
         
-        return true
+        return cell
     }
 
 }
