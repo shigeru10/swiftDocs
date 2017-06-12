@@ -8,57 +8,30 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
-    private var myInfoDarkButton: UIButton!
-    private var myInfoLightButton: UIButton!
-    private var myAddButton: UIButton!
-    private var myDetailButton: UIButton!
-    private var mySystemButton: UIButton!
+    private var myTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        myInfoDarkButton = UIButton(type: .infoDark)
-        myInfoLightButton = UIButton(type: .infoLight)
-        myAddButton = UIButton(type: .contactAdd)
-        myDetailButton = UIButton(type: .detailDisclosure)
-        mySystemButton = UIButton(type: .system)
+        let tWidth: CGFloat = 200
+        let tHeight: CGFloat = 30
+        let posX: CGFloat = (self.view.bounds.width - tWidth)/2
+        let posY: CGFloat = (self.view.bounds.height - tHeight)/2
         
-        let posX: CGFloat = self.view.frame.width/2
-        myInfoDarkButton.layer.position = CGPoint(x: posX, y: 50)
-        myInfoLightButton.layer.position = CGPoint(x: posX, y: 100)
-        myAddButton.layer.position = CGPoint(x: posX, y: 150)
-        myDetailButton.layer.position = CGPoint(x: posX, y: 200)
+        myTextField = UITextField(frame: CGRect(x: posX, y: posY, width: tWidth, height: tHeight))
         
-        let sWidth: CGFloat = 200
-        let sHeight: CGFloat = 50
+        myTextField.text = "Hello textField!"
         
-        let sposX: CGFloat = self.view.frame.width/2 - sWidth/2
-        let sposY: CGFloat = 250
+        myTextField.delegate = self
         
-        mySystemButton.frame = CGRect(x: sposX, y: sposY, width: sWidth, height: sHeight)
+        myTextField.borderStyle = .roundedRect
         
-        mySystemButton.setTitle("MySystemButton", for: .normal)
+        myTextField.clearButtonMode = .whileEditing
         
-        myInfoDarkButton.tag = 1
-        myInfoLightButton.tag = 2
-        myAddButton.tag = 3
-        myDetailButton.tag = 4
-        mySystemButton.tag = 5
-        
-        myInfoDarkButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
-        myInfoLightButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
-        myAddButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
-        myDetailButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
-        mySystemButton.addTarget(self, action: #selector(ViewController.onClickMyButton(sender:)), for: .touchDown)
-        
-        self.view.addSubview(myInfoDarkButton)
-        self.view.addSubview(myInfoLightButton)
-        self.view.addSubview(myAddButton)
-        self.view.addSubview(myDetailButton)
-        self.view.addSubview(mySystemButton)
+        self.view.addSubview(myTextField)
         
     }
 
@@ -66,12 +39,22 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    internal func onClickMyButton(sender: UIButton) {
-        print("onClickMyButton:")
-        print("sender.currentTitle: \(sender.currentTitle)")
-        print("sender.tag: \(sender.tag)")
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("textFieldDidBeginEditing: \(textField.text!)")
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("textFieldDidEndEditing: \(textField.text!)")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("textFieldShouldReturn: \(textField.text!)")
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+
 }
 
