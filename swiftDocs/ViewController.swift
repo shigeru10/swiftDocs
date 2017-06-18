@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController {
 
     private let myItems: NSArray = ["TEST1", "TEST2", "TEST3"]
     private var myTableView: UITableView!
@@ -17,19 +17,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+        let mySmallLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 0, width: 300, height: 150))
+        mySmallLabel.text = "小さめのフォント"
+        mySmallLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        self.view.addSubview(mySmallLabel)
         
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
+        let myNormalLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 30, width: 200, height: 150))
+        myNormalLabel.text = "システm標準のフォントサイズ"
+        myNormalLabel.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+        self.view.addSubview(myNormalLabel)
         
-        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight))
+        let myButtonLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 60, width: 300, height: 150))
+        myButtonLabel.text = "UIButtonのフォントサイズ"
+        myButtonLabel.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize)
+        self.view.addSubview(myButtonLabel)
         
-        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
+        let myCustomLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 90, width: 300, height: 150))
+        myCustomLabel.text = "ポイント20のフォントサイズ"
+        myCustomLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        self.view.addSubview(myCustomLabel)
         
-        myTableView.delegate = self
-        myTableView.dataSource = self
+        let myItalicLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 120, width: 300, height: 150))
+        myItalicLabel.text = "Italicフォント"
+        myItalicLabel.font = UIFont.italicSystemFont(ofSize: UIFont.labelFontSize)
+        self.view.addSubview(myItalicLabel)
         
-        self.view.addSubview(myTableView)
+        let myBoldLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 150, width: 300, height: 150))
+        myBoldLabel.text = "Boldフォント"
+        myBoldLabel.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
+        self.view.addSubview(myBoldLabel)
+        
+        let myArialLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 180, width: 300, height: 150))
+        myArialLabel.text = "ArialHebrew"
+        myArialLabel.font = UIFont(name: "ArilHebew", size: UIFont.labelFontSize)
+        self.view.addSubview(myArialLabel)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,22 +59,5 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        print("Value: \(myItems[indexPath.row])")
-    }
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myItems.count
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath as IndexPath)
-        
-        cell.textLabel?.text = "\(myItems[indexPath.row])"
-        
-        return cell
-    }
-
 }
 
